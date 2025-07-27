@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import Image from "next/image"
 import type { User } from "@/types"
 
 interface UploadModalProps {
@@ -98,11 +97,9 @@ export default function UploadModal({ onClose, onUpload, user }: UploadModalProp
             <div>
               <label className="block text-sm font-medium mb-2">Vista Previa</label>
               <div className="border border-[var(--border-color)] rounded-lg overflow-hidden">
-                <Image
+                <img
                   src={previewUrl || "/placeholder.svg"}
                   alt="Preview"
-                  width={500}
-                  height={200}
                   className="w-full h-48 object-cover"
                   onError={() => setPreviewUrl("")}
                 />

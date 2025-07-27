@@ -1,6 +1,5 @@
 import type { User, ImageData, Comment } from "@/types"
 
-// Datos de ejemplo
 const sampleImages: Omit<ImageData, "id">[] = [
   {
     title: "Paisaje Montañoso",
@@ -59,7 +58,6 @@ class MockDataService {
   }
 
   private initializeData() {
-    // Inicializar con datos de ejemplo
     this.images = sampleImages.map((img, index) => ({
       ...img,
       id: `img_${index + 1}`,

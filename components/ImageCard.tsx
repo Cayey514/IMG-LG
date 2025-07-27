@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { useState } from "react"
-import Image from "next/image"
 import { mockDataService } from "@/lib/mockData"
 import type { ImageData } from "@/types"
 
@@ -36,7 +35,7 @@ export default function ImageCard({ image, onImageClick, viewMode = "grid" }: Im
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (navigator.share) {
+    if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title: image.title,
@@ -46,7 +45,7 @@ export default function ImageCard({ image, onImageClick, viewMode = "grid" }: Im
       } catch (error) {
         console.log("Error sharing:", error)
       }
-    } else {
+    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(image.imageUrl)
     }
   }
@@ -70,11 +69,10 @@ export default function ImageCard({ image, onImageClick, viewMode = "grid" }: Im
       >
         <div className="flex space-x-4">
           <div className="relative w-32 h-32 flex-shrink-0">
-            <Image
+            <img
               src={image.imageUrl || "/placeholder.svg"}
               alt={image.title}
-              fill
-              className="object-cover rounded-xl"
+              className="w-full h-full object-cover rounded-xl"
               onLoad={() => setIsLoading(false)}
             />
             {isLoading && <div className="absolute inset-0 skeleton rounded-xl"></div>}
@@ -126,11 +124,10 @@ export default function ImageCard({ image, onImageClick, viewMode = "grid" }: Im
   return (
     <div className="card-hover p-0 overflow-hidden cursor-pointer animate-fade-in group">
       <div className="relative aspect-square overflow-hidden" onClick={() => onImageClick(image)}>
-        <Image
+        <img
           src={image.imageUrl || "/placeholder.svg"}
           alt={image.title}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           onLoad={() => setIsLoading(false)}
         />
         {isLoading && <div className="absolute inset-0 skeleton"></div>}

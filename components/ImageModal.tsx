@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import CommentSystem from "./CommentSystem"
 import type { ImageData, User } from "@/types"
 
@@ -21,7 +20,7 @@ export default function ImageModal({ image, onClose, user }: ImageModalProps) {
   }
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title: image.title,
@@ -31,7 +30,7 @@ export default function ImageModal({ image, onClose, user }: ImageModalProps) {
       } catch (error) {
         console.log("Error sharing:", error)
       }
-    } else {
+    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(image.imageUrl)
     }
   }
@@ -53,11 +52,9 @@ export default function ImageModal({ image, onClose, user }: ImageModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex-1 flex items-center justify-center bg-black">
-          <Image
+          <img
             src={image.imageUrl || "/placeholder.svg"}
             alt={image.title}
-            width={800}
-            height={600}
             className="max-w-full max-h-full object-contain"
           />
         </div>

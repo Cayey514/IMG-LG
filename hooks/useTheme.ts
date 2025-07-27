@@ -6,15 +6,19 @@ export function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
   useEffect(() => {
-    const saved = localStorage.getItem("imageshare-theme") as "light" | "dark"
-    if (saved) {
-      setTheme(saved)
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("imageshare-theme") as "light" | "dark"
+      if (saved) {
+        setTheme(saved)
+      }
     }
   }, [])
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme)
-    localStorage.setItem("imageshare-theme", theme)
+    if (typeof window !== "undefined") {
+      document.documentElement.setAttribute("data-theme", theme)
+      localStorage.setItem("imageshare-theme", theme)
+    }
   }, [theme])
 
   const toggleTheme = useCallback(() => {

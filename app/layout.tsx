@@ -12,15 +12,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ImageShare - Plataforma de Imágenes",
   description: "Plataforma online para subir, compartir y gestionar tus imágenes con perfiles personalizados",
-  keywords: "subir imágenes, galería, fotos, compartir, perfil, online",
-  openGraph: {
-    title: "ImageShare - Plataforma de Imágenes",
-    description: "Plataforma online para subir, compartir y gestionar tus imágenes",
-  },
-  twitter: {
-    title: "ImageShare - Plataforma de Imágenes",
-    description: "Plataforma online para subir, compartir y gestionar tus imágenes",
-  },
     generator: 'v0.dev'
 }
 
