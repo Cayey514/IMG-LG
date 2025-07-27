@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ImageShare - Plataforma de Imágenes</title>
+    <meta name="description" content="Plataforma online para subir, compartir y gestionar tus imágenes con perfiles personalizados">
+    <meta name="keywords" content="subir imágenes, galería, fotos, compartir, perfil, online">
+    <meta property="og:title" content="ImageShare - Plataforma de Imágenes">
+    <meta property="og:description" content="Plataforma online para subir, compartir y gestionar tus imágenes">
+    <meta name="twitter:title" content="ImageShare - Plataforma de Imágenes">
+    <meta name="twitter:description" content="Plataforma online para subir, compartir y gestionar tus imágenes">
+
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style type="text/tailwindcss">
+    @layer theme {
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --background-color: #fafafa;
+            --surface-color: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+        }
+
+        [data-theme="dark"] {
+            --background-color: #0f172a;
+            --surface-color: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+    }
+
+    @layer base {
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .line-clamp-1 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .line-clamp-3 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+    }
+
+    @layer components {
+        .btn-primary {
+            @apply bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2;
+        }
+        
+        .btn-secondary {
+            @apply bg-[var(--surface-color)] text-[var(--text-primary)] px-6 py-3 rounded-xl font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 border border-[var(--border-color)] flex items-center justify-center space-x-2;
+        }
+
+        .btn-ghost {
+            @apply text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-all duration-200;
+        }
+        
+        .card {
+            @apply bg-[var(--surface-color)] rounded-2xl shadow-sm border border-[var(--border-color)] backdrop-blur-sm;
+        }
+
+        .card-hover {
+            @apply card hover:shadow-xl hover:scale-[1.02] transition-all duration-300;
+        }
+        
+        .input-field {
+            @apply w-full px-4 py-3 border border-[var(--border-color)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent bg-[var(--surface-color)] text-[var(--text-primary)] transition-all duration-200;
+        }
+
+        .glass-effect {
+            @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skeleton {
+            @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+        }
+
+        .toast {
+            @apply fixed top-4 right-4 z-50 p-4 rounded-xl shadow-lg border backdrop-blur-sm transform transition-all duration-300;
+        }
+
+        .toast-success {
+            @apply toast bg-green-50 border-green-200 text-green-800;
+        }
+
+        .toast-error {
+            @apply toast bg-red-50 border-red-200 text-red-800;
+        }
+
+        .toast-info {
+            @apply toast bg-blue-50 border-blue-200 text-blue-800;
+        }
+    }
+
+    @layer utilities {
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .animate-bounce-in {
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    }
+    </style>
+
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel" src="components/Toast.js"></script>
+    <script type="text/babel" src="components/SkeletonLoader.js"></script>
+    <script type="text/babel" src="components/FilterBar.js"></script>
+    <script type="text/babel" src="components/Header.js"></script>
+    <script type="text/babel" src="components/ProfileModal.js"></script>
+    <script type="text/babel" src="components/UploadModal.js"></script>
+    <script type="text/babel" src="components/ImageGallery.js"></script>
+    <script type="text/babel" src="components/ImageCard.js"></script>
+    <script type="text/babel" src="components/ImageModal.js"></script>
+    <script type="text/babel" src="components/CommentSystem.js"></script>
+    <script type="text/babel" src="components/StatsCard.js"></script>
+    <script type="text/babel" src="utils/imageUtils.js"></script>
+    <script type="text/babel" src="hooks/useToast.js"></script>
+    <script type="text/babel" src="hooks/useTheme.js"></script>
+    <script type="text/babel" src="app.js"></script>
+</body>
+</html>
