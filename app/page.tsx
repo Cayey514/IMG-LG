@@ -89,7 +89,6 @@ export default function Home() {
     }
   }
 
-  // Obtener todas las etiquetas disponibles
   const availableTags = useMemo(() => {
     const tags = new Set<string>()
     images.forEach((image) => {
@@ -100,7 +99,6 @@ export default function Home() {
     return Array.from(tags).filter(Boolean)
   }, [images])
 
-  // Filtrar y ordenar imágenes
   const processedImages = useMemo(() => {
     const filtered = images.filter((image) => {
       const title = image.title || ""
@@ -120,7 +118,6 @@ export default function Home() {
       return image.tags?.includes(filterBy) || false
     })
 
-    // Ordenar
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "newest":

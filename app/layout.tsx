@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "ImageShare - Plataforma de Imágenes",
-  description: "Plataforma online para subir, compartir y gestionar tus imágenes con perfiles personalizados",
+  description: "Plataforma online para subir, compartir y gestionar tus imágenes",
     generator: 'v0.dev'
 }
 

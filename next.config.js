@@ -7,20 +7,14 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["images.unsplash.com", "unsplash.com"],
+    domains: ["images.unsplash.com"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
-      {
-        protocol: "https",
-        hostname: "unsplash.com",
-      },
     ],
-    unoptimized: false,
   },
-  output: "standalone",
 }
 
 module.exports = nextConfig
