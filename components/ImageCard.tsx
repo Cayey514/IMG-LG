@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { mockDataService } from "@/lib/mockData"
 import type { ImageData } from "@/types"
